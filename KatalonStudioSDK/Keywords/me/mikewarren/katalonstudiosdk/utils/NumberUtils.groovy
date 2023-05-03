@@ -41,7 +41,7 @@ public final class NumberUtils {
 		return (Math.random() + digit) * (1E9);
 	}
 
-	public static int parseInt(String numberString) {
+	public static int ParseInt(String numberString) {
 		if (numberString.equals(""))
 			return 0;
 

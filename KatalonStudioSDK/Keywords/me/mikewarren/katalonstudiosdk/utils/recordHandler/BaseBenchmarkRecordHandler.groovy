@@ -4,9 +4,9 @@ import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.Row
 
 import com.kms.katalon.core.configuration.RunConfiguration
-import com.signaturemd.models.benchmark.BenchmarkModel
 
 import groovy.transform.InheritConstructors
+import me.mikewarren.katalonstudiosdk.models.benchmark.BenchmarkModel
 import me.mikewarren.katalonstudiosdk.utils.DateUtils
 import me.mikewarren.katalonstudiosdk.utils.StringUtils
 

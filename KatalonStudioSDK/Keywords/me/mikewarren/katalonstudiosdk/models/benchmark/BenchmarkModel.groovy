@@ -1,6 +1,6 @@
 package me.mikewarren.katalonstudiosdk.models.benchmark
 
-import com.signaturemd.models.BaseModel
+import me.mikewarren.katalonstudiosdk.models.BaseModel
 
 public class BenchmarkModel extends BaseModel {
 	private Date submitTime;

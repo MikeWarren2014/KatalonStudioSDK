@@ -12,11 +12,6 @@ public final class NumberUtils {
 	private static NumberFormat CurrencyFormat = NumberFormat.getCurrencyInstance();
 	private static com.github.javafaker.Number NumberFactory = new Faker().number();
 
-	private static final double MemberNetAmount = 1800.0;
-	public static final int MemberVarCount = 4;
-	public static final int FirstMemberVarTierCutoff = 2;
-	public static final int FirstPercentageTierCutoff = 50;
-
 	public static String ToCurrencyString(double amount, boolean wantSpaceDelimiter = true) {
 		StringBuffer buffer = new StringBuffer(this.CurrencyFormat.format(amount))
 		if (wantSpaceDelimiter)
@@ -37,10 +32,6 @@ public final class NumberUtils {
 		return this.NumberFactory.randomNumber(digitCount, true);
 	}
 
-	public static long NextNPINumberStartingWith(int digit) {
-		return (Math.random() + digit) * (1E9);
-	}
-
 	public static int ParseInt(String numberString) {
 		if (numberString.equals(""))
 			return 0;
@@ -48,7 +39,7 @@ public final class NumberUtils {
 		return Integer.parseInt(numberString);
 	}
 
-	public static double parseDouble(String numberString) {
+	public static double ParseDouble(String numberString) {
 		if ((numberString == null) || (numberString.equals("")))
 			return 0.0;
 

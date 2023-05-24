@@ -1,7 +1,11 @@
 plugins {
   id 'java'
+  id 'maven-publish'
   id "com.katalon.gradle-plugin" version "0.1.1"
 }
+
+group = 'com.mikewarren'
+version = '1.0'
 
 repositories {
   mavenCentral()
@@ -9,4 +13,61 @@ repositories {
 
 dependencies {
   implementation 'com.github.javafaker:javafaker:1.0.2'
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    archiveClassifier = 'sources'
+}
+
+sourceSets {
+    main {
+        groovy {
+            srcDirs = ['Keywords', 'Libs']
+            excludes = ['CustomKeywords.groovy', "Temp*.groovy"]
+        }
+    }
+    test {
+        groovy {
+            srcDirs = ['Include/scripts/groovy']
+        }
+    }
+}
+
+publishing {
+    publications {
+        katalonStudioSDK(MavenPublication) {
+          artifact sourceJar
+
+            groupId = project.group
+            // name = project.rootProject.name
+            description = 'Some building blocks for your Katalon Studio project'
+            // url = 'https://github.com/MikeWarren2014/KatalonStudioSDK'
+            from components.java
+
+            // licenses {
+            //     license {
+            //         name = 'The Apache License, Version 2.0'
+            //         url = 'https://www.apache.org.licenses/LICENSE-2.0.txt'
+            //     }
+            // }
+            // developers {
+            //     developer {
+            //         id = 'MikeWarren2014'
+            //         name = 'Warren,Michael'
+            //         email = 'mwarren04011990@gmail.com'
+            //     }
+            // }
+            // scm {
+            //     connection = "scm:git:https://github.com/MikeWarren2014/${project.rootProject.name}.git"
+            //     developerConnection = "scm:git:git@github.com:MikeWarren2014/${project.rootProject.name}.git"
+            //     url = "https://github.com/MikeWarren2014/${project.rootProject.name}"
+            // }
+        }
+    }
+    repositories {
+        maven {
+            url "${project.buildDir}/repo"
+        }
+    }
 }

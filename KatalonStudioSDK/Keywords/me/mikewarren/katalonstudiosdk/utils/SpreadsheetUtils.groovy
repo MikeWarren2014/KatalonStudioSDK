@@ -45,9 +45,90 @@ public final class SpreadsheetUtils {
 					if (targetCell == null)
 						targetCell = targetRow.createCell(colIdx);
 
-					targetCell.setCellValue(cell.getStringCellValue());
+					this.CopyCellValue(cell, targetCell);
 				})
 			})
 		}
+	}
+	
+	// SOURCE: ChatGPT AI, refactored by Mike Warren
+	public static void CopyCellValue(Cell sourceCell, Cell targetCell) {
+		switch (sourceCell.getCellType()) {
+			case CellType.STRING.code:
+				targetCell.setCellValue(sourceCell.getStringCellValue());
+				break;
+			case CellType.NUMERIC.code:
+				if (DateUtil.isCellDateFormatted(sourceCell)) {
+					targetCell.setCellValue(sourceCell.getDateCellValue());
+				} else {
+					targetCell.setCellValue(sourceCell.getNumericCellValue());
+				}
+				break;
+			case CellType.BOOLEAN.code:
+				targetCell.setCellValue(sourceCell.getBooleanCellValue());
+				break;
+			case CellType.FORMULA.code:
+				targetCell.setCellFormula(sourceCell.getCellFormula());
+				break;
+			case CellType.ERROR.code:
+				targetCell.setCellErrorValue(sourceCell.getErrorCellValue());
+				break;
+			case CellType.BLANK.code:
+				targetCell.setCellValue(null);
+				break;
+			default:
+				// If the cell type is unknown, copy the cell value as a string
+				CreationHelper creationHelper = targetCell.getSheet().getWorkbook().getCreationHelper();
+				targetCell.setCellValue(creationHelper.createRichTextString(sourceCell.toString()));
+		}
+	}
+	
+	public static Row FindRowWithKey(Sheet sheet, Object key) { 
+		return sheet
+			.findResult(sheet.createRow(this.GetLastNonEmptyRowNum(sheet) + 1),
+				{ Row row ->
+					if (row.getRowNum() == 0)
+						return null;
+					
+					final Cell firstCell = row.getCell(0);
+	
+					if (firstCell == null)
+						return null;
+	
+					if (!this.CompareKey(firstCell, key))
+						return null;
+	
+					return row;
+				});
+	}
+	
+	public static boolean CompareKey(Cell keyCell, Object key) {
+		if (key.equals(key.toString()))
+			return keyCell.getStringCellValue()
+				.equals(key);
+				
+		return keyCell.getNumericCellValue() == key;
+	}
+	
+	public static Cell CreateCellIfNotExistIn(Row row, int cellIdx) { 
+		final Cell cell = row.getCell(cellIdx);
+		if (cell != null) {
+			return cell;
+		}
+		
+		return row.createCell(cellIdx);
+	}
+	
+	// SOURCE: https://www.phind.com/search?cache=d4085649-039f-4d86-b5cd-963ee40bfc49
+	public static void WriteIntegerCellValue(Cell cell, long value) { 
+		Workbook workbook = cell.getSheet().getWorkbook();
+		
+		CellStyle integerStyle = workbook.createCellStyle();
+		DataFormat format = workbook.createDataFormat();
+		integerStyle.setDataFormat(format.getFormat("0"));
+		
+		cell.setCellValue(value);
+		cell.setCellStyle(integerStyle);
+		
 	}
 }

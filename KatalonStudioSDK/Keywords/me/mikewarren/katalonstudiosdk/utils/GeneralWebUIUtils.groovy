@@ -426,4 +426,10 @@ public final class GeneralWebUIUtils {
 		WebUI.scrollToPosition(0,
 				WebUI.getViewportTopPosition() + WebUI.getViewportHeight() - (WebUI.getElementHeight(topRow) + WebUI.getElementHeight(bottomRow)));
 	}
+
+	public static boolean IsAtBottomOfPage() { 
+		// SOURCE: https://www.phind.com/search?cache=92e2cd9a-8593-4968-9ea6-196c964ea52b
+		return (boolean)WebUI.executeJavaScript("return (window.innerHeight + window.scrollY) >= document.body.offsetHeight;", 
+			null);
+	}
 }

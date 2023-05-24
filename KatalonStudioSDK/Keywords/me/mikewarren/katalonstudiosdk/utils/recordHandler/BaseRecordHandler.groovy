@@ -184,5 +184,9 @@ public abstract class BaseRecordHandler<T> implements AutoCloseable {
 		this.inputStream = null;
 	}
 
+	public List<T> getUsedRecords() {
+		return usedRecords;
+	}
+
 	protected abstract void fillInRow(Row row, T record);
 }

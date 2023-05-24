@@ -48,4 +48,9 @@ public final class NumberUtils {
 
 		return Double.parseDouble(numberString);
 	}
+
+	public static double ToNDigits(double number, int n) { 
+		final double powerOfTen = 10**n;
+		return Math.round(number * powerOfTen)/powerOfTen;
+	}
 }

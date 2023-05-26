@@ -4,7 +4,7 @@ plugins {
   id "com.katalon.gradle-plugin" version "0.1.1"
 }
 
-group = 'com.mikewarren'
+group = 'com.mikewarren.katalonstudiosdk'
 version = '1.0'
 
 dependencies {
@@ -13,19 +13,6 @@ dependencies {
 
 repositories {
     mavenCentral()
-    maven {
-        name = "GitHubPackages"
-        url = "https://maven.pkg.github.com/MikeWarren2014/KatalonStudioSDK"
-        credentials {
-            username = System.getenv("GITHUB_ACTOR")
-            password = System.getenv("GITHUB_TOKEN")
-        }
-    }
-}
-
-task sourceJar(type: Jar) {
-    from sourceSets.main.allSource
-    archiveClassifier = 'sources'
 }
 
 sourceSets {
@@ -43,12 +30,19 @@ sourceSets {
 }
 
 publishing {
+    repositories { 
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/MikeWarren2014/KatalonStudioSDK")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
     publications {
-        maven(MavenPublication) {
-          artifact sourceJar
-
-            groupId = project.group
-            description = 'Some building blocks for your Katalon Studio project'
+        gpr(MavenPublication) {
+            artifactId = 'katalon-studio-sdk'
             from components.java
         }
     }

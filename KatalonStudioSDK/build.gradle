@@ -11,6 +11,18 @@ dependencies {
   implementation 'com.github.javafaker:javafaker:1.0.2'
 }
 
+repositories {
+    mavenCentral()
+    maven {
+        name = "GitHubPackages"
+        url = "https://maven.pkg.github.com/MikeWarren2014/KatalonStudioSDK"
+        credentials {
+            username = System.getenv("GITHUB_ACTOR")
+            password = System.getenv("GITHUB_TOKEN")
+        }
+    }
+}
+
 task sourceJar(type: Jar) {
     from sourceSets.main.allSource
     archiveClassifier = 'sources'
@@ -32,22 +44,12 @@ sourceSets {
 
 publishing {
     publications {
-        katalonStudioSDK(MavenPublication) {
+        maven(MavenPublication) {
           artifact sourceJar
 
             groupId = project.group
             description = 'Some building blocks for your Katalon Studio project'
             from components.java
-        }
-    }
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/MikeWarren2014/${project.rootProject.name}")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
         }
     }
 }

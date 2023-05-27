@@ -1,3 +1,5 @@
+package me.mikewarren.katalonstudiosdk.pages
+
 import me.mikewarren.katalonstudiosdk.utils.GeneralWebUIUtils
 
 import com.kms.katalon.core.model.FailureHandling
@@ -7,7 +9,7 @@ import com.kms.katalon.core.webui.keyword.WebUICommonKeywords as WebUI
 
 public trait Scrollable {
 	public abstract TestObject getTopRow();
-	public TestObject getBottomRow() { return null;}
+	public TestObject getBottomRow() { return null; }
 
 	public void scrollDown() {
 		GeneralWebUIUtils.ScrollDown(getTopRow(), getBottomRow());

@@ -49,3 +49,10 @@ bin/
 /target/
 .cache/
 
+# Files that are coming from the child .gitignore file
+Reports
+	
+output
+!output/.gitkeep
+build
+

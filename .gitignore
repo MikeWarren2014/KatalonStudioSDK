@@ -49,7 +49,7 @@ bin/
 /target/
 .cache/
 
-.gradle
+.gradle/*
 
 # Files that are coming from the child .gitignore file
 Reports

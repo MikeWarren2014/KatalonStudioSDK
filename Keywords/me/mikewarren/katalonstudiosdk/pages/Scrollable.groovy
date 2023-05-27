@@ -5,7 +5,7 @@ import me.mikewarren.katalonstudiosdk.utils.GeneralWebUIUtils
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.common.WebUiCommonHelper
-import com.kms.katalon.core.webui.keyword.WebUICommonKeywords as WebUI
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 public trait Scrollable {
 	public abstract TestObject getTopRow();

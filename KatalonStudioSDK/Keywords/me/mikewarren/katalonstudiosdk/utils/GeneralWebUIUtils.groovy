@@ -423,8 +423,13 @@ public final class GeneralWebUIUtils {
 	}
 
 	public static void ScrollDown(TestObject topRow, TestObject bottomRow) {
+		int newYCoord = WebUI.getViewportTopPosition() + WebUI.getViewportHeight() - WebUI.getElementHeight(topRow);
+		if (bottomRow != null) {
+			newYCoord -= WebUI.getElementHeight(bottomRow);
+		}
+
 		WebUI.scrollToPosition(0,
-				WebUI.getViewportTopPosition() + WebUI.getViewportHeight() - (WebUI.getElementHeight(topRow) + WebUI.getElementHeight(bottomRow)));
+			newYCoord);
 	}
 
 	public static boolean IsAtBottomOfPage() { 
